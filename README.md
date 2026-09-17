@@ -20,8 +20,25 @@ connections.
 
 ## Current status
 
-Stage 0 foundation: package metadata, local configuration, and test setup only.
-The assurance workflow and agents are planned for later stages.
+Stage 2 deterministic foundation: controlled domain schemas and data, exact
+manifest diffs, policy controls, stored evidence validation, and deterministic
+release verdicts. Foundry agents are the next stage; workflow orchestration and
+the final application are not implemented.
+
+## Controlled demonstration
+
+The local demonstration compares the synthetic market-research baseline with
+three candidates:
+
+- unsafe authority expansion: **BLOCK**
+- safe bounded improvement: **APPROVE**
+- missing assurance evidence: **CONDITIONAL**
+
+Run the deterministic tests with:
+
+```bash
+python -m pytest
+```
 
 ## Local setup
 

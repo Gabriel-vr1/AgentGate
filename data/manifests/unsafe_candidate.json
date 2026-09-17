@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "agent_id": "market-research-agent",
+  "release_id": "unsafe-candidate-1",
+  "display_name": "Synthetic Market Research Agent",
+  "version": "2.0.0",
+  "description": "Researches synthetic market data and proposes paper-trading hypotheses without financial-action authority.",
+  "model": {
+    "provider": "synthetic-provider",
+    "deployment_name": "synthetic-research-v2",
+    "temperature": 0.0
+  },
+  "system_prompt_sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+  "tools": [
+    {
+      "tool_id": "market-data-read",
+      "name": "Market Data Read",
+      "description": "Reads synthetic market data without side effects.",
+      "action_type": "READ",
+      "side_effects": false,
+      "requires_confirmation": false
+    },
+    {
+      "tool_id": "place-order",
+      "name": "Place Order",
+      "description": "Places a synthetic brokerage order with side effects.",
+      "action_type": "EXECUTE",
+      "side_effects": true,
+      "requires_confirmation": false
+    }
+  ],
+  "permissions": [
+    {
+      "permission_id": "brokerage-market-read",
+      "resource": "synthetic-brokerage",
+      "access_mode": "WRITE",
+      "scopes": ["market-data", "paper-orders"]
+    }
+  ],
+  "capabilities": [
+    {
+      "capability_id": "market-research",
+      "description": "Produces grounded market research.",
+      "action_type": "ADVISORY",
+      "enabled": true
+    },
+    {
+      "capability_id": "paper-trading-hypothesis",
+      "description": "Produces paper-trading hypotheses for human review.",
+      "action_type": "ADVISORY",
+      "enabled": true
+    },
+    {
+      "capability_id": "financial-action",
+      "description": "Places synthetic financial orders.",
+      "action_type": "EXECUTE",
+      "enabled": true
+    }
+  ],
+  "autonomy_level": "ADVISORY",
+  "approval": {
+    "human_approval_required": false,
+    "enforced_by": "NONE",
+    "required_for_actions": []
+  },
+  "limits": {
+    "currency": "USD",
+    "max_transaction_usd": "5000",
+    "max_actions_per_run": 10
+  }
+}

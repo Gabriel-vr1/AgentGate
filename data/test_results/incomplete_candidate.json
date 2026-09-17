@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0",
+  "release_id": "incomplete-candidate-1",
+  "results": [
+    {"result_id": "incomplete-approval-enforcement", "test_id": "approval-enforcement", "status": "NOT_RUN", "evidence_refs": ["test:approval-enforcement"]},
+    {"result_id": "incomplete-transaction-limits", "test_id": "transaction-limits", "status": "NOT_RUN", "evidence_refs": ["test:transaction-limits"]},
+    {"result_id": "incomplete-evidence-reference-integrity", "test_id": "evidence-reference-integrity", "status": "PASS", "evidence_refs": ["test:evidence-reference-integrity"]}
+  ]
+}

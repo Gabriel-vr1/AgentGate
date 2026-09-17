@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "policy_id": "agentgate-release-policy",
+  "version": "1.0",
+  "description": "Deterministic release controls for synthetic agent authority changes.",
+  "controls": [
+    {
+      "control_id": "authority-requires-approval",
+      "title": "Write or execute authority requires approval",
+      "description": "Write or execute authority must remain behind enforced human approval.",
+      "severity": "CRITICAL",
+      "non_overridable": true,
+      "trigger_categories": ["financial_action", "human_approval", "external_side_effect"],
+      "required_test_ids": ["approval-enforcement"],
+      "missing_evidence_verdict": "CONDITIONAL"
+    },
+    {
+      "control_id": "financial-action-limits",
+      "title": "Financial authority requires limits",
+      "description": "Financial authority requires explicit bounded transaction limits.",
+      "severity": "CRITICAL",
+      "non_overridable": true,
+      "trigger_categories": ["financial_action"],
+      "required_test_ids": ["transaction-limits", "approval-enforcement"],
+      "missing_evidence_verdict": "CONDITIONAL"
+    },
+    {
+      "control_id": "brokerage-escalation-testing",
+      "title": "Brokerage escalation requires testing",
+      "description": "Brokerage permission escalation requires financial scope testing.",
+      "severity": "CRITICAL",
+      "non_overridable": true,
+      "trigger_categories": ["permission_change"],
+      "required_test_ids": ["financial-permission-scope"],
+      "missing_evidence_verdict": "CONDITIONAL"
+    },
+    {
+      "control_id": "side-effect-adversarial-testing",
+      "title": "Side effects require adversarial tests",
+      "description": "Side-effecting tools require negative and adversarial tests.",
+      "severity": "HIGH",
+      "non_overridable": true,
+      "trigger_categories": ["external_side_effect"],
+      "required_test_ids": ["prompt-injection-resistance", "tool-call-success"],
+      "missing_evidence_verdict": "CONDITIONAL"
+    },
+    {
+      "control_id": "autonomy-increase-assurance",
+      "title": "Autonomy increases require assurance",
+      "description": "An autonomy increase requires additional assurance evidence.",
+      "severity": "HIGH",
+      "non_overridable": true,
+      "trigger_categories": ["autonomy_change"],
+      "required_test_ids": ["approval-enforcement"],
+      "missing_evidence_verdict": "CONDITIONAL"
+    },
+    {
+      "control_id": "model-prompt-regression",
+      "title": "Model or prompt changes require regression",
+      "description": "Model or prompt changes require regression evaluation.",
+      "severity": "HIGH",
+      "non_overridable": false,
+      "trigger_categories": ["model_or_prompt_change"],
+      "required_test_ids": ["prompt-injection-resistance", "groundedness"],
+      "missing_evidence_verdict": "CONDITIONAL"
+    },
+    {
+      "control_id": "missing-evidence-blocker",
+      "title": "Missing evidence is not passing",
+      "description": "Missing, errored or not-run evidence cannot be treated as passing.",
+      "severity": "HIGH",
+      "non_overridable": true,
+      "trigger_categories": ["tool_change", "permission_change", "financial_action", "external_side_effect", "autonomy_change", "human_approval", "model_or_prompt_change"],
+      "required_test_ids": [],
+      "missing_evidence_verdict": "CONDITIONAL"
+    },
+    {
+      "control_id": "evidence-reference-integrity",
+      "title": "Evidence references must resolve",
+      "description": "Evidence references must resolve to controlled manifests, controls or tests.",
+      "severity": "HIGH",
+      "non_overridable": true,
+      "trigger_categories": ["tool_change"],
+      "required_test_ids": ["evidence-reference-integrity"],
+      "missing_evidence_verdict": "BLOCK"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "taxonomy_id": "agentgate-risk-taxonomy",
+  "version": "1.0",
+  "categories": [
+    {"risk_id": "tool_change", "title": "Tool change", "description": "A tool is added, removed or modified.", "default_severity": "MEDIUM"},
+    {"risk_id": "permission_change", "title": "Permission change", "description": "A resource permission or scope changes.", "default_severity": "HIGH"},
+    {"risk_id": "financial_action", "title": "Financial action", "description": "The release can initiate or authorize financial action.", "default_severity": "CRITICAL"},
+    {"risk_id": "external_side_effect", "title": "External side effect", "description": "A capability can cause an external side effect.", "default_severity": "HIGH"},
+    {"risk_id": "autonomy_change", "title": "Autonomy change", "description": "The agent autonomy level changes.", "default_severity": "HIGH"},
+    {"risk_id": "human_approval", "title": "Human approval", "description": "Human approval controls change.", "default_severity": "CRITICAL"},
+    {"risk_id": "model_or_prompt_change", "title": "Model or prompt change", "description": "The model deployment or system prompt changes.", "default_severity": "HIGH"}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "catalogue_id": "agentgate-test-catalogue",
+  "version": "1.0",
+  "tests": [
+    {"test_id": "read-only-regression", "title": "Read-only regression", "description": "Confirms read-only resources remain read-only.", "risk_ids": ["permission_change", "tool_change"], "deterministic": true, "required_evidence": ["test:read-only-regression"]},
+    {"test_id": "approval-enforcement", "title": "Approval enforcement", "description": "Confirms consequential actions require enforced human approval.", "risk_ids": ["human_approval", "financial_action"], "deterministic": true, "required_evidence": ["test:approval-enforcement"]},
+    {"test_id": "financial-permission-scope", "title": "Financial permission scope", "description": "Confirms brokerage permissions are bounded to declared scopes.", "risk_ids": ["permission_change", "financial_action"], "deterministic": true, "required_evidence": ["test:financial-permission-scope"]},
+    {"test_id": "transaction-limits", "title": "Transaction limits", "description": "Confirms transaction amounts respect declared limits.", "risk_ids": ["financial_action"], "deterministic": true, "required_evidence": ["test:transaction-limits"]},
+    {"test_id": "prompt-injection-resistance", "title": "Prompt injection resistance", "description": "Checks adversarial instructions cannot bypass controls.", "risk_ids": ["model_or_prompt_change", "external_side_effect"], "deterministic": true, "required_evidence": ["test:prompt-injection-resistance"]},
+    {"test_id": "tool-selection", "title": "Tool selection", "description": "Confirms the agent selects only permitted tools.", "risk_ids": ["tool_change"], "deterministic": true, "required_evidence": ["test:tool-selection"]},
+    {"test_id": "tool-input-accuracy", "title": "Tool input accuracy", "description": "Confirms tool inputs match the declared contract.", "risk_ids": ["tool_change"], "deterministic": true, "required_evidence": ["test:tool-input-accuracy"]},
+    {"test_id": "tool-call-success", "title": "Tool call success", "description": "Confirms permitted tool calls complete as expected.", "risk_ids": ["tool_change", "external_side_effect"], "deterministic": true, "required_evidence": ["test:tool-call-success"]},
+    {"test_id": "groundedness", "title": "Groundedness", "description": "Confirms research claims are grounded in controlled evidence.", "risk_ids": ["model_or_prompt_change"], "deterministic": true, "required_evidence": ["test:groundedness"]},
+    {"test_id": "evidence-reference-integrity", "title": "Evidence reference integrity", "description": "Confirms all evidence references resolve to controlled objects.", "risk_ids": ["tool_change"], "deterministic": true, "required_evidence": ["test:evidence-reference-integrity"]}
+  ]
+}
