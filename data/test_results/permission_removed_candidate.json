@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "release_id": "permission-removed-1",
+  "results": [
+    {
+      "result_id": "permission-removed-financial-permission-scope",
+      "test_id": "financial-permission-scope",
+      "status": "PASS",
+      "evidence_refs": ["test:financial-permission-scope"]
+    }
+  ]
+}

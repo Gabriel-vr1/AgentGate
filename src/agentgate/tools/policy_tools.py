@@ -127,12 +127,30 @@ def evaluate_policy(
 			is_triggered = bool(missing_evidence)
 			control_tests = missing_evidence
 			control_missing = missing_evidence
-		if is_triggered and control_missing:
+		if (
+			is_triggered
+			and control.control_id == "authority-requires-approval"
+			and any(
+				change.after in {"WRITE", "EXECUTE"}
+				for change in diff.changes
+				if change.path.endswith("/action_type") or change.path.endswith("/access_mode")
+			)
+			and not candidate.approval.human_approval_required
+		):
+			control_verdict = Verdict.BLOCK
+		elif (
+			is_triggered
+			and control.control_id == "financial-action-limits"
+			and candidate.limits.max_transaction_usd > 0
+			and not candidate.approval.human_approval_required
+		):
+			control_verdict = Verdict.BLOCK
+		elif is_triggered and control_missing:
 			control_verdict = control.missing_evidence_verdict
 		elif is_triggered and control.control_id == "authority-requires-approval":
 			control_verdict = Verdict.BLOCK
 		elif is_triggered and control.control_id == "financial-action-limits":
-			control_verdict = Verdict.BLOCK if candidate.limits.max_transaction_usd > 0 and not candidate.approval.human_approval_required else Verdict.APPROVE
+			control_verdict = Verdict.APPROVE
 		else:
 			control_verdict = Verdict.APPROVE
 		if is_triggered or control_missing:

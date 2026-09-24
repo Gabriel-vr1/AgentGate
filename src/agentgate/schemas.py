@@ -239,6 +239,7 @@ class EvaluationCase(FrozenModel):
 	expected_verdict: Verdict
 	expected_control_ids: list[Identifier]
 	expected_required_test_ids: list[Identifier]
+	result_bundle_path: NonEmptyString | None = None
 
 
 class ManifestChange(FrozenModel):
@@ -286,7 +287,97 @@ class TestResultBundle(FrozenModel):
 	@model_validator(mode="after")
 	def validate_unique_result_ids(self) -> "TestResultBundle":
 		_unique_ids(self.results, "result_id")
+		_unique_ids(self.results, "test_id")
 		return self
+
+
+EvidenceReference = Annotated[
+	str,
+	StringConstraints(
+		min_length=2,
+		pattern=r"^(\/.*|control:[a-z][a-z0-9_-]*|test:[a-z][a-z0-9_-]*)$",
+	),
+]
+
+
+class ChangeAssessmentItem(FrozenModel):
+	path: NonEmptyString
+	change_type: Literal["added", "removed", "modified"]
+	area: Literal[
+		"capability",
+		"permission",
+		"data_access",
+		"autonomy",
+		"approval",
+		"model",
+		"prompt",
+		"metadata",
+	]
+	before: Any = None
+	after: Any = None
+	explanation: NonEmptyString
+	evidence_refs: list[EvidenceReference] = Field(min_length=1)
+
+
+class ChangeAssessment(FrozenModel):
+	schema_version: Literal["1.0"]
+	execution_mode: Literal["local_deterministic"]
+	baseline_release_id: Identifier
+	candidate_release_id: Identifier
+	changes: list[ChangeAssessmentItem]
+	confirmed_risk_categories: list[Identifier]
+	summary: NonEmptyString
+
+
+class AssurancePlan(FrozenModel):
+	schema_version: Literal["1.0"]
+	execution_mode: Literal["local_deterministic"]
+	candidate_release_id: Identifier
+	confirmed_risk_categories: list[Identifier]
+	control_ids: list[Identifier]
+	required_test_ids: list[Identifier]
+	missing_evidence_test_ids: list[Identifier]
+	human_review_required: bool
+	rationale: NonEmptyString
+	evidence_refs: list[EvidenceReference]
+
+
+class DecisionFinding(FrozenModel):
+	code: Identifier
+	message: NonEmptyString
+	evidence_refs: list[EvidenceReference] = Field(min_length=1)
+
+
+class ReleaseDecision(FrozenModel):
+	schema_version: Literal["1.0"]
+	execution_mode: Literal["local_deterministic"]
+	baseline_release_id: Identifier
+	candidate_release_id: Identifier
+	verdict: Verdict
+	verdict_floor: Verdict
+	blockers: list[DecisionFinding]
+	conditions: list[DecisionFinding]
+	evidence_refs: list[EvidenceReference]
+	remediation: list[NonEmptyString]
+
+	@model_validator(mode="after")
+	def validate_verdict_floor(self) -> "ReleaseDecision":
+		ranks = {Verdict.APPROVE: 0, Verdict.CONDITIONAL: 1, Verdict.BLOCK: 2}
+		if ranks[self.verdict] < ranks[self.verdict_floor]:
+			raise ValueError("verdict cannot be less severe than verdict_floor")
+		return self
+
+
+class WorkflowFailure(FrozenModel):
+	status: Literal["FAILED"]
+	stage: Literal[
+		"input_validation",
+		"change_analyst",
+		"assurance_planner",
+		"deterministic_policy",
+		"release_judge",
+	]
+	message: NonEmptyString
 
 
 class DeterministicReviewResult(FrozenModel):

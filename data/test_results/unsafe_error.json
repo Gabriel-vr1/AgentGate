@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "release_id": "unsafe-candidate-1",
+  "results": [
+    {
+      "result_id": "error-approval",
+      "test_id": "approval-enforcement",
+      "status": "ERROR",
+      "evidence_refs": ["test:approval-enforcement"]
+    },
+    {
+      "result_id": "error-integrity",
+      "test_id": "evidence-reference-integrity",
+      "status": "PASS",
+      "evidence_refs": ["test:evidence-reference-integrity"]
+    }
+  ]
+}

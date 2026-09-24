@@ -73,6 +73,30 @@ def validate_result_bundle(
 	return bundle
 
 
+def validate_evidence_references(
+	references: list[str],
+	manifest: AgentManifest,
+	policy: ReleasePolicy,
+	catalogue: TestCatalogue,
+) -> list[str]:
+	"""Validate references emitted by agent handoffs and final decisions."""
+	control_ids = {control.control_id for control in policy.controls}
+	test_ids = {test.test_id for test in catalogue.tests}
+	manifest_document = json.loads(manifest.model_dump_json())
+	for reference in references:
+		if reference.startswith("/"):
+			resolve_json_pointer(manifest_document, reference)
+		elif reference.startswith("control:"):
+			if reference.removeprefix("control:") not in control_ids:
+				raise EvidenceReferenceError(f"unknown control reference: {reference}")
+		elif reference.startswith("test:"):
+			if reference.removeprefix("test:") not in test_ids:
+				raise EvidenceReferenceError(f"unknown test reference: {reference}")
+		else:
+			raise EvidenceReferenceError(f"unsupported evidence reference: {reference}")
+	return references
+
+
 def result_statuses(bundle: TestResultBundle) -> dict[str, str]:
 	return {result.test_id: result.status.value for result in bundle.results}
 
