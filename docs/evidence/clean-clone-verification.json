@@ -1,20 +1,28 @@
 {
-  "source": "fresh HTTPS clone of origin/main",
-  "revision": "ab3c258",
+  "source": "fresh HTTPS clone of origin/main, then fast-forward to submission candidate",
+  "initial_clone_revision": "ab3c258",
+  "verified_candidate_revision": "c2f1bed",
+  "verified_at": "2026-09-25T05:07:18.610147+00:00",
   "python": "3.12.10",
   "new_virtual_environment": true,
-  "install_command": ".venv/Scripts/python.exe -m pip install -e '.[dev,foundry]'",
   "installation": "PASS",
+  "install_command": ".venv/Scripts/python.exe -m pip install -e '.[dev,foundry]'",
   "pytest_passed": 53,
+  "pytest_configuration": "copied .env.example present; isolated default/environment tests now pass",
   "labelled_evaluations_passed": 13,
   "pip_check": "PASS",
+  "cli_verdicts": {
+    "unsafe": "BLOCK",
+    "safe": "APPROVE",
+    "incomplete": "CONDITIONAL"
+  },
   "http_startup": "PASS",
   "http_local_verdicts": {
     "unsafe": "BLOCK",
     "safe": "APPROVE",
     "incomplete": "CONDITIONAL"
   },
-  "dotenv_example_configuration": "HTTP startup and local reviews passed with copied .env.example",
-  "issue_found": "Configuration-default test read copied .env; test fixture isolated in submission candidate",
-  "final_candidate_recheck": "pending commit; same application logic, documentation/CSS/test-fixture changes only"
+  "current_polished_html_served": true,
+  "browser_visual_qa": "unavailable",
+  "tracked_worktree_clean": true
 }
