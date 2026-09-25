@@ -1,46 +1,51 @@
-# AgentGate reviewer demonstration
+# Three-minute demonstration script
 
-## Prepare
+## Prepare before recording
 
-Install `.[dev,foundry]`, configure the two Foundry environment variables as shown
-in the README, and start `python app.py serve`. Open http://127.0.0.1:8765.
-Keep [the verified live trace](evidence/unsafe-foundry-trace.json) available as
-saved evidence if connectivity is unavailable. Never present a saved trace as a
-new live run.
-
-## Three-minute walkthrough
-
-1. **Frame the problem.** A changed agent can gain authority while its stored
-   tests still say PASS. AgentGate reviews that authority expansion before release.
-2. **Select Unsafe authority expansion**, choose Microsoft Foundry, and run review.
-   Show baseline `baseline-1` against `unsafe-candidate-1`. Point to removal of
-   workflow approval, READ-to-WRITE permission escalation, the added `place-order`
-   tool and the USD 5,000 limit. These are synthetic manifests, not trading actions.
-3. **Show BLOCK.** The Python floor and final verdict are both BLOCK. Point to
-   `authority-requires-approval` and `financial-action-limits`. All stored test
-   statuses may say PASS; those fixtures cannot override these blockers.
-4. **Show the three stages.** Change Analyst explains the diff; Assurance Planner
-   explains the controlled test selection; Release Judge recommends the same
-   Python verdict. Model prose is advisory. Evidence and remediation remain
-   Python-owned. Inspect the trace and download the review plus trace.
-5. **Compare locally.** Select Local deterministic mode and run Safe bounded
-   improvement (APPROVE), then Missing assurance evidence (CONDITIONAL). Local
-   mode is visibly labeled and uses the same guardrails without a model call.
-6. **Close with remediation.** Resolve the named policy blockers before release;
-   provide missing assurance evidence where required. Human owners decide the
-   subsequent release action. AgentGate does not deploy anything.
-
-## CLI alternative
+Use the exact setup commands in the README. Set the Foundry environment
+variables, confirm the Azure CLI session is authenticated, and start:
 
 ```powershell
-python app.py run unsafe --mode foundry --save out/decision.json --trace out/trace.json
-python app.py run unsafe
-python app.py run safe
-python app.py run incomplete
-python -m pytest -q
-python -m agentgate.evaluation
+.venv/Scripts/python.exe app.py serve
 ```
 
-If Foundry fails, the run fails safely. Select local mode explicitly; do not label
-that result as cloud execution. Existing saved evidence proves the recorded live
-run only. Traces here are local JSON; no Foundry-portal trace visibility is claimed.
+Open http://127.0.0.1:8765. Select Microsoft Foundry live-model mode.
+Keep the [evidence index](verification.md) open in another tab or editor.
+The three saved runs took approximately 8-12 seconds of model time each;
+allow extra time for network variability. This is a 180-second recording plan,
+not a claim that a full spoken browser rehearsal was timed in this session.
+
+## Recording timeline
+
+| Time | Action | Suggested narration |
+| --- | --- | --- |
+| 0:00-0:20 | Show the scenario selector and Foundry mode | AgentGate asks what authority changed, what evidence is needed, and whether a human should release the candidate. Everything here is synthetic. |
+| 0:20-1:00 | Run Unsafe authority expansion; point to the diff and BLOCK | This upgrade adds an order tool, WRITE access and a USD 5,000 limit while removing human approval. Python blocks it even though stored fixtures say PASS. |
+| 1:00-1:30 | Show findings, remediation and the three stage explanations; expand trace | Change Analyst explains the diff, Assurance Planner explains controlled test selection, and Release Judge recommends a constrained verdict. Python owns authoritative fields. These are Foundry-backed model stages, not persistent agents. |
+| 1:30-2:00 | Run Safe bounded improvement in Foundry mode | This bounded advisory change returns APPROVE. Python selects no required tests for this scenario. Model commentary is advisory, so the selected-test table takes precedence over prose. |
+| 2:00-2:30 | Run Missing assurance evidence in Foundry mode | This case returns CONDITIONAL: required approval and transaction-limit evidence is not passing. Missing evidence never becomes a pass. |
+| 2:30-3:00 | Download review plus trace; show local mode selector and evidence index | All three cases have saved live response IDs and decisions. Local deterministic mode remains available. Traces and evaluations are local, not Application Insights or Foundry evaluation jobs. A human remains accountable for release. |
+
+## If service latency threatens the recording
+
+Use the already saved traces and decisions and label them **recorded live runs**.
+Run the UI in visibly labelled local mode to keep the walkthrough responsive.
+Do not present local output or a saved artifact as a new live execution.
+
+## CLI backup
+
+```powershell
+.venv/Scripts/python.exe app.py run unsafe --mode foundry --save out/unsafe-decision.json --trace out/unsafe-trace.json
+.venv/Scripts/python.exe app.py run safe --mode foundry --save out/safe-decision.json --trace out/safe-trace.json
+.venv/Scripts/python.exe app.py run incomplete --mode foundry --save out/incomplete-decision.json --trace out/incomplete-trace.json
+.venv/Scripts/python.exe app.py run all
+.venv/Scripts/python.exe -m pytest -q
+.venv/Scripts/python.exe -m agentgate.evaluation
+```
+
+## Claims to avoid
+
+Do not claim persistent Foundry agent resources, portal traces, Application
+Insights, formal Foundry evaluations, fresh execution of assurance tests,
+zero model hallucinations, or completion of every original blueprint item.
+Do not claim the demo was recorded or submitted until the owner has done so.

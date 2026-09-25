@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.0",
+  "execution_mode": "foundry",
+  "baseline_release_id": "baseline-1",
+  "candidate_release_id": "incomplete-candidate-1",
+  "verdict": "CONDITIONAL",
+  "verdict_floor": "CONDITIONAL",
+  "blockers": [],
+  "conditions": [
+    {
+      "code": "financial-action-limits",
+      "message": "required evidence is missing or not passing",
+      "evidence_refs": [
+        "control:financial-action-limits",
+        "test:approval-enforcement",
+        "test:transaction-limits"
+      ]
+    },
+    {
+      "code": "missing-evidence-blocker",
+      "message": "required evidence is missing or not passing",
+      "evidence_refs": [
+        "control:missing-evidence-blocker",
+        "test:approval-enforcement",
+        "test:transaction-limits"
+      ]
+    }
+  ],
+  "evidence_refs": [
+    "control:financial-action-limits",
+    "control:missing-evidence-blocker",
+    "test:approval-enforcement",
+    "test:evidence-reference-integrity",
+    "test:transaction-limits"
+  ],
+  "remediation": [
+    "Complete evidence for control financial-action-limits.",
+    "Complete evidence for control missing-evidence-blocker."
+  ]
+}

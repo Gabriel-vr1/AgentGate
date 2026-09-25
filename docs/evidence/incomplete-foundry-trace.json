@@ -1,0 +1,119 @@
+{
+  "trace_id": "990a855acf6c4ac2b7e08a6471ea6e80",
+  "started_at": "2026-09-25T04:55:25.968241+00:00",
+  "execution_mode": "foundry",
+  "trace_backend": "local_json",
+  "status": "COMPLETED",
+  "spans": [
+    {
+      "stage": "Change Analyst",
+      "attempt": 1,
+      "deployment": "gpt-4.1-mini",
+      "response_id": "resp_0f5567a5c3fad8ca016ab5fec175108193b2e782dcbc90afc4",
+      "usage": {
+        "input_tokens": 341,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 90,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 431
+      },
+      "status": "validated",
+      "output": {
+        "explanation": "The candidate release 'incomplete-candidate-1' introduces a new capability 'paper-trade-execution' that enables preparation of consequential paper-trade actions for approval. This change is categorized under 'financial_action' risk, indicating potential impact on financial operations. The release ID and version have been updated accordingly. No evidence of safeguards or controls is provided; the presence of the capability alone does not confirm enforcement or compliance."
+      },
+      "duration_ms": 3222.22
+    },
+    {
+      "stage": "Assurance Planner",
+      "attempt": 1,
+      "deployment": "gpt-4.1-mini",
+      "response_id": "resp_0b4f4048c4063d19016ab5fec32f5c8190a73012971c242eef",
+      "usage": {
+        "input_tokens": 2540,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 177,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 2717
+      },
+      "status": "validated",
+      "output": {
+        "explanation": "The candidate release 'incomplete-candidate-1' adds a new capability 'paper-trade-execution' that enables preparation of consequential paper-trade actions, which is categorized as a 'financial_action' risk. According to the policy controls triggered by this risk category, the release requires evidence of enforced human approval ('approval-enforcement' test) and explicit transaction limits ('transaction-limits' test) to ensure safe financial authority changes. Additionally, evidence reference integrity must be confirmed. The stored evidence shows that 'evidence-reference-integrity' test has passed, but both 'approval-enforcement' and 'transaction-limits' tests have not been run, resulting in missing critical evidence. Therefore, the test selection focuses on obtaining approval enforcement and transaction limits evidence to satisfy the financial action controls. Human review is required due to missing critical evidence for these controls."
+      },
+      "duration_ms": 2908.53
+    },
+    {
+      "stage": "Release Judge",
+      "attempt": 1,
+      "deployment": "gpt-4.1-mini",
+      "response_id": "resp_0617e9724ec4c72c016ab5fec6152481908eecb141da233eab",
+      "usage": {
+        "input_tokens": 1710,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 90,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 1800
+      },
+      "status": "validated",
+      "output": {
+        "explanation": "The candidate release 'incomplete-candidate-1' introduces a new financial action capability 'paper-trade-execution' without providing required evidence for approval enforcement and transaction limits controls. Although evidence-reference-integrity test passed, the absence of critical evidence for enforcing human approval and transaction limits triggers policy controls that mandate a CONDITIONAL verdict. Human review is also required due to these missing evidences.",
+        "verdict": "CONDITIONAL"
+      },
+      "duration_ms": 1849.69
+    }
+  ],
+  "decision": {
+    "schema_version": "1.0",
+    "execution_mode": "foundry",
+    "baseline_release_id": "baseline-1",
+    "candidate_release_id": "incomplete-candidate-1",
+    "verdict": "CONDITIONAL",
+    "verdict_floor": "CONDITIONAL",
+    "blockers": [],
+    "conditions": [
+      {
+        "code": "financial-action-limits",
+        "message": "required evidence is missing or not passing",
+        "evidence_refs": [
+          "control:financial-action-limits",
+          "test:approval-enforcement",
+          "test:transaction-limits"
+        ]
+      },
+      {
+        "code": "missing-evidence-blocker",
+        "message": "required evidence is missing or not passing",
+        "evidence_refs": [
+          "control:missing-evidence-blocker",
+          "test:approval-enforcement",
+          "test:transaction-limits"
+        ]
+      }
+    ],
+    "evidence_refs": [
+      "control:financial-action-limits",
+      "control:missing-evidence-blocker",
+      "test:approval-enforcement",
+      "test:evidence-reference-integrity",
+      "test:transaction-limits"
+    ],
+    "remediation": [
+      "Complete evidence for control financial-action-limits.",
+      "Complete evidence for control missing-evidence-blocker."
+    ]
+  }
+}

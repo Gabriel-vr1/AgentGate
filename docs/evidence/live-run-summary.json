@@ -1,0 +1,82 @@
+{
+  "verification_kind": "live_foundry_inference_not_portal_evaluation",
+  "source_commit_at_live_runs": "ab3c2585ea30c69b7f98641e9ae39c358e480618",
+  "recorded_at": "2026-09-25T05:04:14.718256+00:00",
+  "project": "agentgate",
+  "deployment": "gpt-4.1-mini",
+  "implementation_type": "application_model_stages_not_persistent_agents",
+  "runs": [
+    {
+      "scenario": "unsafe",
+      "verdict": "BLOCK",
+      "verdict_floor": "BLOCK",
+      "started_at": "2026-09-25T04:55:02.142504+00:00",
+      "trace_id": "1b29148402d74a73b019587f446927ac",
+      "model_calls": 3,
+      "repairs": 0,
+      "model_duration_ms": 11573.78,
+      "total_tokens": 9321,
+      "response_ids": [
+        "resp_03f47b0fe42e35c8016ab5feab5edc8194bb3da1d77b791708",
+        "resp_05dbde56a29819f3016ab5feaedc2c8193bdff6a44ec4ed174",
+        "resp_089aa82886a4e48b016ab5feb205f88190bf19506e89a46ff2"
+      ],
+      "trace_sha256": "b0095c43b84e7dd2fc377e902761f511a8716144e24fd713ad4019089af65784"
+    },
+    {
+      "scenario": "safe",
+      "verdict": "APPROVE",
+      "verdict_floor": "APPROVE",
+      "started_at": "2026-09-25T04:55:15.783188+00:00",
+      "trace_id": "7ef4e2b1521b45c5a211d2e112a4731e",
+      "model_calls": 3,
+      "repairs": 0,
+      "model_duration_ms": 8323.19,
+      "total_tokens": 5121,
+      "response_ids": [
+        "resp_04590268587929d0016ab5feb715588190a21fa7fb82b1f90b",
+        "resp_05012dcf9a95a734016ab5feb9114481959ce74bd572ff3fb4",
+        "resp_07c5ce7570275641016ab5febbe214819096e7c20ecb5ca8cb"
+      ],
+      "trace_sha256": "a8b3921484d2a2bbe1053c4edf020fbc2640f6fdb68cf52d311f3ed4344b05a7"
+    },
+    {
+      "scenario": "incomplete",
+      "verdict": "CONDITIONAL",
+      "verdict_floor": "CONDITIONAL",
+      "started_at": "2026-09-25T04:55:25.968241+00:00",
+      "trace_id": "990a855acf6c4ac2b7e08a6471ea6e80",
+      "model_calls": 3,
+      "repairs": 0,
+      "model_duration_ms": 7980.44,
+      "total_tokens": 4948,
+      "response_ids": [
+        "resp_0f5567a5c3fad8ca016ab5fec175108193b2e782dcbc90afc4",
+        "resp_0b4f4048c4063d19016ab5fec32f5c8190a73012971c242eef",
+        "resp_0617e9724ec4c72c016ab5fec6152481908eecb141da233eab"
+      ],
+      "trace_sha256": "99beacb787ea732fc27d7890351130a067f99599871baba833face911bd99992"
+    }
+  ],
+  "source_sha256": {
+    "data/test_catalogue.json": "2e9375eb0723fa835a0dd05bd03c32fbecc248b1b1bcecf664d9a59877f2245c",
+    "data/manifests/baseline_agent.json": "390b4edb64970d5acbce007abb7205ae6574c00bb49eaac44de16c04584ef1a9",
+    "data/manifests/incomplete_candidate.json": "22d6d0d29f2789b40bc5079ee103c12b6d414f28feb31f0d2c80a1f232918688",
+    "data/manifests/permission_removed_candidate.json": "e2af7879890f3005b508b511b25304b84ce6f905bd75dc10b7c5f63d15f733de",
+    "data/manifests/safe_candidate.json": "44f92fe350d4f6275f29ec50157bf10e675c041cc68859d95a7db14b25988c44",
+    "data/manifests/unsafe_candidate.json": "33e480dced966f6336b07f7c408f9215aa86b0f456ca2f73c8c08cf550318d93",
+    "data/policies/release_policy.json": "3637fd80bacc2ccd233cbecb2cf9262b93ecc9bdbca2236890808b210e430ca0",
+    "data/policies/risk_taxonomy.json": "9d6ae7a83cdd43b26c250c9e0f3035f8bc38bce06852568f37e4efc3c1c7b156",
+    "data/test_results/baseline.json": "750980e5c182a2853fc5f4c780fffb168cf7e5463eb8a8ed055f921806ba21b7",
+    "data/test_results/incomplete_candidate.json": "1cde7350073af134a21b311de2196cdeb51ad5dc9037e4050f5f83f38d3b7ede",
+    "data/test_results/permission_removed_candidate.json": "91bbab0a2842b812f1c9e1e19c8ab02c8feab1bcbf98fbdd9827f91817245220",
+    "data/test_results/safe_candidate.json": "463135a0ff3016cb844724e1bb64c2b83423e9ae84104589205344add21e1ad6",
+    "data/test_results/unsafe_candidate.json": "28da3519cd1cea55b867a7f34a6b119a48b088e9215ec56e1a22f02c9f6ec770",
+    "data/test_results/unsafe_conflicting.json": "102ba6ea449499bb2577662723160aa121f83dc191463d873f261a003a23fd64",
+    "data/test_results/unsafe_error.json": "f0aa2b4840e2e834375ea6cedd5d1671b4f46168556d54ecdf0ecd7b81ff7ae9",
+    "data/test_results/unsafe_failure.json": "4371a77fd29344760e268ffd39e78e01aef5e6c4e9bca1c486ac00244740c571",
+    "src/agentgate/agents/foundry.py": "2e682a0da286d13d898303ce0d2f2d888f6d9f65c22f26755af1f3f7cbf10cc5",
+    "src/agentgate/workflow.py": "c20b06eb01a417f62151b4b541fda5827d0ea927353858d68b32ca0d1d52e263",
+    "src/agentgate/schemas.py": "0149f64a72979ac836d08a7886d4237764577472595b0e86b2fb2f6f249ce6da"
+  }
+}

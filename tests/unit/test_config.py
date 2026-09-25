@@ -4,7 +4,9 @@ from agentgate.config import get_settings
 
 
 @pytest.fixture(autouse=True)
-def clear_settings_cache():
+def clear_settings_cache(monkeypatch, tmp_path):
+    # Developer .env files must not affect isolated default/environment tests.
+    monkeypatch.chdir(tmp_path)
     get_settings.cache_clear()
     yield
     get_settings.cache_clear()

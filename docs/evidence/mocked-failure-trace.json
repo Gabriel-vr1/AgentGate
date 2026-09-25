@@ -1,0 +1,19 @@
+{
+  "trace_id": "ec2143eda57b47a0a41fc2ba78918d37",
+  "started_at": "2026-09-25T04:58:13.445902+00:00",
+  "execution_mode": "foundry",
+  "trace_backend": "local_json",
+  "status": "FAILED",
+  "spans": [
+    {
+      "stage": "Change Analyst",
+      "attempt": 1,
+      "deployment": "mock-deployment",
+      "status": "unavailable",
+      "error_type": "TimeoutError",
+      "duration_ms": 0.73
+    }
+  ],
+  "verification_kind": "mocked_transport_failure_not_live",
+  "error_type": "WorkflowError"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "execution_mode": "foundry",
+  "baseline_release_id": "baseline-1",
+  "candidate_release_id": "safe-candidate-1",
+  "verdict": "APPROVE",
+  "verdict_floor": "APPROVE",
+  "blockers": [],
+  "conditions": [],
+  "evidence_refs": [],
+  "remediation": []
+}

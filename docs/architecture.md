@@ -8,13 +8,17 @@ the same `analyze`, `plan`, and `judge` interfaces.
 flowchart TD
     Input[Controlled manifests, policy, taxonomy, catalogue and stored results]
     Validate[Python input validation and exact diff]
-    Analyst[Change Analyst]
-    Planner[Assurance Planner]
+    Analyst[Change Analyst - model-backed adapter]
+    Planner[Assurance Planner - model-backed adapter]
     Policy[Python deterministic review and plan validation]
-    Judge[Release Judge]
+    Judge[Release Judge - model-backed adapter]
     Guard[Python final handoff validation and verdict floor]
     Output[Decision, reviewer UI and local JSON trace]
+    Model[Existing Foundry project Responses API - gpt-4.1-mini]
     Input --> Validate --> Analyst --> Planner --> Policy --> Judge --> Guard --> Output
+    Analyst -. live mode .-> Model
+    Planner -. live mode .-> Model
+    Judge -. live mode .-> Model
 ```
 
 ## Exactly three specialized components
@@ -88,3 +92,6 @@ results are invented or inferred by a model, and fixture PASS statuses do not
 prove the corresponding control exists. The evaluation suite verifies the
 controlled cases; required control/test expectations are subsets, since focused
 cases can exercise one expectation within a larger set of findings.
+
+See [blueprint audit](blueprint-audit.md) for differences from the original
+persistent-agent, portal-tracing and Foundry-evaluation architecture.

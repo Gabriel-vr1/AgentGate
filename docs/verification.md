@@ -1,53 +1,66 @@
-# Submission verification ? 25 September 2026
+# Submission verification - 25 September 2026
 
-## Live Foundry evidence
+## Live Foundry results
 
-Existing project: `agentgate`; resource: `agentgate-foundry-gvr0710`;
-region: Spain Central; deployment: `gpt-4.1-mini`.
-Authentication used the existing Azure CLI session. No resources were created,
-removed, or reconfigured. No keys or tokens were committed.
+All three cases completed through all three stages using the existing project
+`agentgate`, resource `agentgate-foundry-gvr0710`, deployment `gpt-4.1-mini`.
+No resources were created or changed. These are project-scoped model calls,
+not persistent agents or formal Foundry evaluation jobs.
 
-The saved unsafe run began at `2026-09-25T04:39:04.604589+00:00` and completed
-all three stages on their first attempts. The result was BLOCK with Python
-floor BLOCK. [Trace](evidence/unsafe-foundry-trace.json),
-[decision](evidence/unsafe-foundry-decision.json).
+| Scenario | Verdict | Start (UTC; add 2h for SAST) | Model-call time | Tokens |
+| --- | --- | --- | --- | --- |
+| unsafe | BLOCK | 2026-09-25T04:55:02.142504+00:00 | 11.57 s | 9321 |
+| safe | APPROVE | 2026-09-25T04:55:15.783188+00:00 | 8.32 s | 5121 |
+| incomplete | CONDITIONAL | 2026-09-25T04:55:25.968241+00:00 | 7.98 s | 4948 |
 
-| Stage | Response ID | Duration |
-| --- | --- | --- |
-| Change Analyst | `resp_0858550130aad028016ab5faec50248190ad61a464ebb3d40b` | 5229.39 ms |
-| Assurance Planner | `resp_09560f245f78af2c016ab5faefca5481969ee70e4ff0116083` | 2432.15 ms |
-| Release Judge | `resp_0c10f42f858cdf5c016ab5faf258bc81978918aab8670239d9` | 2355.80 ms |
+All nine model outputs validated on attempt 1; no repair was required. The three
+runs finished within one minute, well inside the 30-minute live-run limit.
+Model-call time is the sum of recorded request durations, not a benchmark or
+end-to-end browser latency measurement.
 
-Total recorded usage: 9,335 tokens across three responses. The trace records
-application spans and service response IDs, not Azure Monitor export. Responses
-were requested with `store=False`.
+## Evidence index
 
-## Automated checks
+- [Unsafe trace](evidence/unsafe-foundry-trace.json) and [decision](evidence/unsafe-foundry-decision.json)
+- [Safe trace](evidence/safe-foundry-trace.json) and [decision](evidence/safe-foundry-decision.json)
+- [Incomplete trace](evidence/incomplete-foundry-trace.json) and [decision](evidence/incomplete-foundry-decision.json)
+- [Live summary](evidence/live-run-summary.json): response IDs, source/input hashes, timings and usage
+- [Mocked failure trace](evidence/mocked-failure-trace.json): injected timeout, safe stop, no decision; NOT a live service failure
+- [Labelled evaluation results](evidence/evaluation-results.json)
+- [Secret scan report](evidence/secret-scan.json)
+- [Clean-clone verification](evidence/clean-clone-verification.json)
 
-- Full pytest suite: **53 passed** (including all 34 original tests).
-- Evaluation suites: **13/13 passed**, including verdict, expected control subset
-  and expected required-test subset checks. [Results](evidence/evaluation-results.json).
-- Three local CLI demonstrations: unsafe BLOCK, safe APPROVE, incomplete CONDITIONAL.
-- `pip check`: no broken requirements.
-- Mocked cloud checks: all three scenarios, bounded repair, wrong verdict,
-  extra/invented fields, blank output, timeout, sanitized error logging,
-  credential-destination validation, and preservation of Python findings.
-- Reviewer HTTP checks: HTML served, complete scenario evidence returned, and
-  cross-origin review requests rejected.
+These traces are local application JSON. There is no Azure Monitor/Application
+Insights export, portal-trace verification, or tool/handoff span coverage.
+Optional portal tracing/evaluation work was deferred without provisioning or
+changing the existing integration.
 
-The incomplete demo case previously expected `authority-requires-approval`
-although the baseline engine does not emit that finding for that case. Its
-expectation now matches the existing deterministic behavior and evaluation case;
-policy semantics were not changed.
+## Tests and metrics
 
-## Limitations
+- Full pytest suite: **53 passed**, including all 34 original tests.
+- Labelled evaluation suite: **10/10**, including all six BLOCK-labelled cases.
+- Demonstration suite: **3/3**. Both suites check verdicts, expected control
+  subsets and selected-test subsets; workflow execution validates references.
+- Three local CLI demos: **BLOCK / APPROVE / CONDITIONAL**.
+- Fresh Python 3.12 clone installation and reviewer HTTP startup: passed.
+- Fresh-clone local review API: all three expected verdicts returned.
+- JavaScript syntax (`node --check`), dependency consistency (`pip check`) and
+  local Markdown link checks: passed.
 
-No browser was available to the automation session, so visual layout and browser
-interaction have not been verified. The live unsafe case was verified through
-the CLI, not through the browser. Other cloud scenarios are mocked, not live.
-No Azure portal trace visibility or telemetry export was verified or configured.
-The stored tests are synthetic fixtures. Model narratives can still overstate
-what a PASS fixture proves; they never change the authoritative decision fields.
+The copied `.env` exposed a configuration-test isolation bug. The test fixture
+now changes to a temporary directory, so developer settings do not alter the
+safe-defaults test. Application configuration and business logic are unchanged.
 
-Verified runtime packages include Python 3.12, azure-ai-projects 2.7.0,
-azure-identity 1.25.3 and its compatible transitive OpenAI client 3.19.2.
+## Qualification of blueprint metrics
+
+Schema-valid output and resolvable references do not prove narrative truth.
+The saved safe planner/judge commentary mentions tests that Python did not
+select. The authoritative selected-test list is empty and the final decision
+retains only Python-owned fields. Zero unsupported model claims is not claimed.
+Six BLOCK-labelled evaluation cases reuse the unsafe manifest; 100% seeded
+recall does not establish general policy coverage. Stored PASS/FAIL/ERROR/NOT_RUN
+results are fixtures, not newly executed candidate tests.
+
+Browser automation exposed no browser. Visual layout, click-through behavior
+and download interactions were not verified. The 180-second demo script is a
+recording plan; a timed spoken rehearsal and final recording remain owner actions.
+See the [blueprint audit](blueprint-audit.md) and [limitations](limitations.md).

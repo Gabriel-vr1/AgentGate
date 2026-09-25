@@ -11,22 +11,38 @@ and the verdict floor. An LLM cannot downgrade a deterministic BLOCK.
 
 ## Submission status
 
-- Verified live on 25 September 2026: all three stages used the existing
-  `gpt-4.1-mini` deployment in Foundry project `agentgate`, Spain Central.
-- Unsafe authority expansion returned **BLOCK**, with no repair required.
-- [Saved live trace](docs/evidence/unsafe-foundry-trace.json) includes three
-  service response IDs, token usage, durations, model explanations, and the final decision.
-- [Saved decision](docs/evidence/unsafe-foundry-decision.json) and
-  [evaluation results](docs/evidence/evaluation-results.json) are included.
-- 53 tests and all 13 controlled evaluation/demo cases pass.
-- The compact reviewer UI is implemented and HTTP-tested. Browser visual QA
-  could not run because the automation session exposed no available browser.
+All three scenarios were verified live on 25 September 2026 against the existing
+`gpt-4.1-mini` deployment in project `agentgate`, Spain Central. All nine stage
+calls passed validation on the first attempt.
+
+| Live scenario | Verdict | Saved trace | Decision |
+| --- | --- | --- | --- |
+| Unsafe authority expansion | BLOCK | [Trace](docs/evidence/unsafe-foundry-trace.json) | [Decision](docs/evidence/unsafe-foundry-decision.json) |
+| Safe bounded improvement | APPROVE | [Trace](docs/evidence/safe-foundry-trace.json) | [Decision](docs/evidence/safe-foundry-decision.json) |
+| Missing assurance evidence | CONDITIONAL | [Trace](docs/evidence/incomplete-foundry-trace.json) | [Decision](docs/evidence/incomplete-foundry-decision.json) |
+
+**Implementation type:** three Foundry-backed model stages called sequentially
+by Python, not persistent Foundry agent resources. Traces are local JSON;
+evaluations are local Python runs. No Application Insights or Foundry evaluation
+job is claimed.
+
+53 tests and all 13 labelled evaluation/demo cases pass. A fresh clone installs
+in a new Python 3.12 environment, starts the reviewer, and returns all three
+expected local verdicts over HTTP. See [verification](docs/verification.md),
+[submission summary](docs/submission-summary.md), and the honest
+[blueprint audit](docs/blueprint-audit.md). The original blueprint is partially
+fulfilled; portal resources/telemetry/evaluation remain deferred.
 
 ## Run the reviewer
 
-From this repository in Windows PowerShell, using the existing Python 3.12 environment:
+Prerequisites: Windows PowerShell, Git, and Python 3.12 (`py -3.12`). Azure CLI
+and an authorized existing Foundry project/model are needed only for live mode.
+From a clean checkout:
 
 ```powershell
+git clone https://github.com/Gabriel-vr1/AgentGate.git
+cd AgentGate
+py -3.12 -m venv .venv
 .venv/Scripts/python.exe -m pip install -e '.[dev,foundry]'
 .venv/Scripts/python.exe app.py serve
 ```
@@ -55,7 +71,7 @@ uses `AzureCliCredential` and the existing Azure CLI login; use `az login` only
 if your session needs refreshing. No API keys are needed. The project endpoint
 is checked before authentication. No Azure resources or hosted agents are created.
 
-Select **Microsoft Foundry ? live model** in the page, or run:
+Select **Microsoft Foundry - live model** in the page, or run:
 
 ```powershell
 .venv/Scripts/python.exe app.py run unsafe --mode foundry --save out/unsafe-decision.json --trace out/unsafe-trace.json
@@ -92,7 +108,8 @@ normal test/evaluation runs do not call Azure.
 ## Architecture and evidence
 
 See [architecture](docs/architecture.md), the [demo script](docs/demo_script.md),
-and [verification record](docs/verification.md).
+[verification record](docs/verification.md), [blueprint audit](docs/blueprint-audit.md),
+and [limitations](docs/limitations.md).
 
 The integration uses the official [Azure AI Projects SDK and project-scoped
 Responses client](https://learn.microsoft.com/en-us/python/api/overview/azure/ai-projects-readme?view=azure-python).
@@ -112,8 +129,26 @@ advisory and may contain errors; their factual correctness is not guaranteed by
 schema validation. Authoritative fields are constructed and checked in Python.
 The Release Judge recommendation must equal the Python floor in this version.
 
-Only the unsafe scenario has been verified live; all three scenario
-contracts are exercised with mocked cloud responses. The UI is a single-user,
+All three scenarios have been verified live and with mocked cloud responses. The UI is a single-user,
 loopback-only standard-library server, not a hosted service. There is no real
 trading, live market data, CI/CD, MCP, extra industry, or resource provisioning.
 Human reviewers remain accountable for any release action.
+
+The UI has HTTP and JavaScript syntax checks but no automated browser visual QA
+in this session. Model prose can mention tests that Python did not select;
+use the selected-test table and decision fields as authoritative.
+
+## Reproduce the three live evidence files
+
+After setting the two environment variables above (or copying `.env.example`
+to the ignored `.env`), run:
+
+```powershell
+.venv/Scripts/python.exe app.py run unsafe --mode foundry --save out/unsafe-decision.json --trace out/unsafe-trace.json
+.venv/Scripts/python.exe app.py run safe --mode foundry --save out/safe-decision.json --trace out/safe-trace.json
+.venv/Scripts/python.exe app.py run incomplete --mode foundry --save out/incomplete-decision.json --trace out/incomplete-trace.json
+```
+
+A successful live run reports `Execution mode: foundry`. On failure, no cloud
+decision is issued; use `--mode local_deterministic` explicitly for fallback.
+The recorded evidence is a historical run, not a guarantee of future service availability.
