@@ -97,3 +97,17 @@ cases can exercise one expectation within a larger set of findings.
 
 See [blueprint audit](blueprint-audit.md) for differences from the original
 persistent-agent, portal-tracing and Foundry-evaluation architecture.
+
+## Planned production services - not implemented
+
+The submission diagram separates the implemented prototype boundary from future
+services. The production-readiness plan covers an authenticated endpoint,
+enterprise identity and role-based access, evidence retention, audit logging,
+and human release approval. Managed Foundry agents would be considered only if
+operationally appropriate. OpenTelemetry/Foundry export to Application Insights,
+formal evaluators and a controlled CI/CD approval step are planned, not enabled.
+
+Monitor latency, token use, repairs, failures, tool success, verdict distribution
+and blocker frequency. Add representative regression cases when policies, tools,
+models or prompts change, and run evaluations before release. Preserve Python
+authority and deterministic non-downgrade controls in any future deployment.

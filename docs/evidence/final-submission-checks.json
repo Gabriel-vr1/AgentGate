@@ -32,7 +32,8 @@
   },
   "dependency_check": "passed",
   "javascript_syntax": "passed",
-  "pdf_pages": 5,
-  "pdf_visual_inspection": "all five rendered pages inspected",
-  "limitations": "no browser visual/download QA; no spoken rehearsal or recording; no portal telemetry/evaluation"
+  "pdf_pages": 6,
+  "pdf_visual_inspection": "all six rubric-aligned rendered pages inspected",
+  "limitations": "no browser visual/download QA; no spoken rehearsal or recording; no portal telemetry/evaluation",
+  "rubric_revision": "owner-authorized deadline extension; twelve requested headings; prototype and planned services separated; application unchanged"
 }
