@@ -93,7 +93,7 @@ def run_case(case_id: str, save_path: Path | None = None, mode="local_determinis
 
 
 def main() -> int:
-	parser = argparse.ArgumentParser(description="AgentGate local release assurance demo")
+	parser = argparse.ArgumentParser(description="AgentGate governed release assurance")
 	subparsers = parser.add_subparsers(dest="command", required=True)
 	subparsers.add_parser("list", help="list controlled demonstration cases")
 	run_parser = subparsers.add_parser("run", help="run one controlled demonstration case")
