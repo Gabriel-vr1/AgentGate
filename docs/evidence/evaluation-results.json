@@ -1,0 +1,136 @@
+{
+  "passed": 13,
+  "total": 13,
+  "cases": [
+    {
+      "suite": "eval_cases",
+      "case_id": "unsafe-authority-expansion",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "safe-bounded-change",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "missing-evidence",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "write-without-approval",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "increased-financial-limit",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "missing-permissions",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "conflicting-evidence",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "required-test-failure",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "required-test-error",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "eval_cases",
+      "case_id": "no-material-authority-change",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "demo_cases",
+      "case_id": "unsafe-authority-expansion",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "demo_cases",
+      "case_id": "safe-bounded-improvement",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    },
+    {
+      "suite": "demo_cases",
+      "case_id": "missing-assurance-evidence",
+      "checks": {
+        "verdict": true,
+        "controls": true,
+        "tests": true
+      },
+      "passed": true
+    }
+  ]
+}

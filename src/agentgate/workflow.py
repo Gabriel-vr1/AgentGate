@@ -73,6 +73,10 @@ def _validate_change_references(
 
 
 def _validate_plan(plan: AssurancePlan, review: DeterministicReviewResult) -> None:
+	if plan.candidate_release_id != review.candidate_release_id:
+		raise ValueError("assurance plan release ID does not match review")
+	if plan.confirmed_risk_categories != review.diff.confirmed_risk_categories:
+		raise ValueError("assurance plan risk categories do not match review")
 	expected_tests = review.policy.required_test_ids
 	if plan.required_test_ids != expected_tests:
 		raise ValueError("assurance plan tests do not match deterministic test selection")
@@ -161,6 +165,10 @@ def run_workflow(
 			assessment, plan, review, result_bundle
 		)
 		decision = ReleaseDecision.model_validate(decision.model_dump())
+		expected = ReleaseJudge().judge(assessment, plan, review, result_bundle)
+		for field in ("blockers", "conditions", "evidence_refs", "remediation"):
+			if getattr(decision, field) != getattr(expected, field):
+				raise ValueError(f"release decision changed Python-owned {field}")
 		return _validate_decision(decision, review, candidate, policy, catalogue)
 	except (EvidenceReferenceError, ValueError, TypeError) as error:
 		raise _fail("release_judge", error) from error

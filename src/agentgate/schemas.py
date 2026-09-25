@@ -321,7 +321,7 @@ class ChangeAssessmentItem(FrozenModel):
 
 class ChangeAssessment(FrozenModel):
 	schema_version: Literal["1.0"]
-	execution_mode: Literal["local_deterministic"]
+	execution_mode: Literal["local_deterministic", "foundry"]
 	baseline_release_id: Identifier
 	candidate_release_id: Identifier
 	changes: list[ChangeAssessmentItem]
@@ -331,7 +331,7 @@ class ChangeAssessment(FrozenModel):
 
 class AssurancePlan(FrozenModel):
 	schema_version: Literal["1.0"]
-	execution_mode: Literal["local_deterministic"]
+	execution_mode: Literal["local_deterministic", "foundry"]
 	candidate_release_id: Identifier
 	confirmed_risk_categories: list[Identifier]
 	control_ids: list[Identifier]
@@ -350,7 +350,7 @@ class DecisionFinding(FrozenModel):
 
 class ReleaseDecision(FrozenModel):
 	schema_version: Literal["1.0"]
-	execution_mode: Literal["local_deterministic"]
+	execution_mode: Literal["local_deterministic", "foundry"]
 	baseline_release_id: Identifier
 	candidate_release_id: Identifier
 	verdict: Verdict

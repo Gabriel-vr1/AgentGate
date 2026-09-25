@@ -3,7 +3,8 @@ import json
 from pathlib import Path
 
 from agentgate.tools.manifest_tools import compare_manifest_paths
-from agentgate.workflow import WorkflowError, run_workflow
+from agentgate.workflow import WorkflowError
+from agentgate.runner import execute
 
 
 ROOT = Path(__file__).parent
@@ -70,15 +71,15 @@ def _print_decision(case_id: str, decision, diff) -> None:
 		print(f"  - {item}")
 
 
-def run_case(case_id: str, save_path: Path | None = None) -> int:
+def run_case(case_id: str, save_path: Path | None = None, mode="local_deterministic", trace_path=None) -> int:
 	candidate_name, title = CASES[case_id]
 	paths = _paths(candidate_name)
 	try:
-		decision = run_workflow(*paths)
+		decision, _ = execute(paths, mode, trace_path)
 		diff = compare_manifest_paths(paths[0], paths[1])
-	except WorkflowError as error:
-		print(f"Execution mode: local_deterministic")
-		print(f"Case failed at {error.failure.stage}: {error.failure.message}")
+	except (WorkflowError, ValueError) as error:
+		print(f"Execution mode: {mode}")
+		print(f"Case failed: {error}")
 		return 2
 	_print_decision(title, decision, diff)
 	if save_path is not None:
@@ -98,14 +99,24 @@ def main() -> int:
 	run_parser = subparsers.add_parser("run", help="run one controlled demonstration case")
 	run_parser.add_argument("case", choices=[*CASES, "all"])
 	run_parser.add_argument("--save", type=Path, help="save one final decision as JSON")
+	run_parser.add_argument("--mode", choices=["local_deterministic", "foundry"], default="local_deterministic")
+	run_parser.add_argument("--trace", type=Path, help="save application trace JSON")
+	serve_parser = subparsers.add_parser("serve", help="open the local reviewer interface")
+	serve_parser.add_argument("--port", type=int, default=8765)
 	args = parser.parse_args()
+	if args.command == "serve":
+		from agentgate.reviewer import serve
+		serve(ROOT, args.port)
+		return 0
 	if args.command == "list":
 		for case_id, (_, title) in CASES.items():
 			print(f"{case_id}: {title}")
 		return 0
 	if args.case == "all":
-		return max(run_case(case_id) for case_id in CASES)
-	return run_case(args.case, args.save)
+		if args.save or args.trace:
+			parser.error("--save and --trace require one case")
+		return max(run_case(case_id, mode=args.mode) for case_id in CASES)
+	return run_case(args.case, args.save, args.mode, args.trace)
 
 
 if __name__ == "__main__":
