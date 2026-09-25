@@ -71,7 +71,7 @@ uses `AzureCliCredential` and the existing Azure CLI login; use `az login` only
 if your session needs refreshing. No API keys are needed. The project endpoint
 is checked before authentication. No Azure resources or hosted agents are created.
 
-Select **Microsoft Foundry - live model** in the page, or run:
+Select **Microsoft Foundry live** in the page, or run:
 
 ```powershell
 .venv/Scripts/python.exe app.py run unsafe --mode foundry --save out/unsafe-decision.json --trace out/unsafe-trace.json
@@ -152,3 +152,19 @@ to the ignored `.env`), run:
 A successful live run reports `Execution mode: foundry`. On failure, no cloud
 decision is issued; use `--mode local_deterministic` explicitly for fallback.
 The recorded evidence is a historical run, not a guarantee of future service availability.
+
+## Submission package
+
+- [Technical architecture and evidence PDF](docs/AgentGate_Technical_Architecture_and_Evidence.pdf)
+- [Standalone architecture diagram](docs/architecture-diagram.svg)
+- [Final blueprint status](docs/submission-status.md)
+- [Recording shot list](docs/recording_shot_list.md) and [spoken script](docs/demo_script.md)
+- [Ready-to-paste submission form](docs/submission_form_copy.md)
+- [Reproduction guide](docs/reproduction-guide.md)
+
+The generated `submission/` folder and `AgentGate_Submission_Package.zip` are
+local release artifacts and are ignored by Git. Source documents and the PDF
+are committed. Rebuild the PDF using `docs/build_submission_pdf.py` with optional
+ReportLab authoring tooling; no application dependencies were added.
+
+Rebuild the local bundle with `.venv/Scripts/python.exe docs/build_submission_bundle.py`.

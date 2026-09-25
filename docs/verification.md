@@ -61,6 +61,8 @@ recall does not establish general policy coverage. Stored PASS/FAIL/ERROR/NOT_RU
 results are fixtures, not newly executed candidate tests.
 
 Browser automation exposed no browser. Visual layout, click-through behavior
-and download interactions were not verified. The 180-second demo script is a
+and download interactions were not verified. The 2:50 demo script is a
 recording plan; a timed spoken rehearsal and final recording remain owner actions.
 See the [blueprint audit](blueprint-audit.md) and [limitations](limitations.md).
+
+Final documentation/package gate: [final verification](final-verification.md).

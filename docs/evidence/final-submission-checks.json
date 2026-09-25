@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-09-25T06:11:14.446339+00:00",
+  "application_commit": "eb1cae5",
+  "changes": "documentation and generated submission assets only",
+  "tests_passed": 53,
+  "evaluations_passed": 13,
+  "evaluations_total": 13,
+  "local_cli_verdicts": {
+    "unsafe": "BLOCK",
+    "safe": "APPROVE",
+    "incomplete": "CONDITIONAL"
+  },
+  "http": {
+    "root": 200,
+    "unknown_route": 404,
+    "invalid_origin": 403,
+    "invalid_scenario": 422,
+    "three_local_verdicts": "passed",
+    "both_modes_present": true
+  },
+  "download": "all 3 JSON payloads exact round-trip through real handler with DOM stub; actual browser not verified",
+  "live_evidence": "existing 3 live trace hashes and all recorded source hashes verified; backend unchanged; no redundant live runs",
+  "clean_clone": "independent clone at eb1cae5; README editable install; 53 tests; 13 evaluations; serve startup and all 3 HTTP reviews passed",
+  "secrets": {
+    "scanner": "detect-secrets 1.5.0 offline",
+    "history_snapshots": 10,
+    "history_findings": 98,
+    "current_findings": 24,
+    "classification": "verified source/trace digests, commit IDs and synthetic invalid-endpoint credential fixture only",
+    "actual_credentials_found": 0,
+    "sensitive_tracked_paths": 0
+  },
+  "dependency_check": "passed",
+  "javascript_syntax": "passed",
+  "pdf_pages": 5,
+  "pdf_visual_inspection": "all five rendered pages inspected",
+  "limitations": "no browser visual/download QA; no spoken rehearsal or recording; no portal telemetry/evaluation"
+}

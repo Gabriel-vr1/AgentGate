@@ -219,3 +219,7 @@ __marimo__/
 
 # Local review exports and traces
 out/
+
+# Generated submission release artifacts; sources live in docs/
+/submission/
+/AgentGate_Submission_Package.zip

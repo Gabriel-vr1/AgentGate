@@ -60,3 +60,9 @@ limited to the controlled demonstration.
 The repository and script are prepared for the owner to record and submit.
 No recording, challenge eligibility decision or successful portal submission
 is implied by this implementation report.
+
+## Final submission assets
+
+See the [technical PDF](AgentGate_Technical_Architecture_and_Evidence.pdf),
+[recording shot list](recording_shot_list.md), [submission form copy](submission_form_copy.md),
+[consolidated blueprint status](submission-status.md) and [final verification](final-verification.md).

@@ -1,5 +1,7 @@
 # Architecture
 
+[Standalone submission diagram](architecture-diagram.svg) | [Technical PDF](AgentGate_Technical_Architecture_and_Evidence.pdf)
+
 AgentGate retains the existing deterministic engine and three-stage handoffs.
 The execution runner selects local adapters or Foundry-backed adapters through
 the same `analyze`, `plan`, and `judge` interfaces.
